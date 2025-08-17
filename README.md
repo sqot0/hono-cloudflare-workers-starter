@@ -13,7 +13,7 @@ This is a starter template for building Cloudflare Workers using the [Hono](http
 All tools in this stack are free or low-cost, efficient, and easy to use.  
 - **Hono** is lightweight and fast for edge/serverless environments.
 - **Drizzle ORM** is simple, type-safe, and flexible for database changes.
-- **libSQL (Turso DB)** is a serverless database with a generous free tier ([turso.tech](https://turso.tech)).
+- **libSQL (Turso DB)** is a serverless database with a generous free tier [turso.tech](https://turso.tech).
 - **Better Auth** provides secure authentication out of the box.
 - **Zod** makes validation easy and reliable.
 - The project is easy to change:  
