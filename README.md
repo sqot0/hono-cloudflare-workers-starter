@@ -32,7 +32,7 @@ All tools in this stack are free or low-cost, efficient, and easy to use.
 1. **Clone the repository**
    ```sh
    git clone https://github.com/sqot0/hono-cloudflare-workers-starter
-   cd hono_cloudflare_workers_starter
+   cd hono-cloudflare-workers-starter
    ```
 
 2. **Install dependencies**
