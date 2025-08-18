@@ -3,8 +3,15 @@ import { Scalar } from '@scalar/hono-api-reference'
 import type { Bindings, Variables } from '@/types'
 
 export default function configureOpenAPI(app: OpenAPIHono<{ Bindings: Bindings; Variables: Variables }>) {
+  app.openAPIRegistry.registerComponent('securitySchemes', 'Bearer', {
+    type: 'http',
+    scheme: 'bearer',
+    description: 'Bearer authentication'
+  })
+
   app.doc('/openapi.json', {
     openapi: '3.0.0',
+
     info: {
       title: 'Hono API',
       version: '1.0.0',

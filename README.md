@@ -17,7 +17,7 @@ All tools in this stack are free or low-cost, efficient, and easy to use.
 - **Better Auth** provides secure authentication out of the box.
 - **Zod** makes validation easy and reliable.
 - The project is easy to change:  
-  - To switch databases, update the provider in lib/better-auth/index.ts, adjust Drizzle and client setup in db/index.ts, and run the codegen command (`pnpm run ba:g`, `npm run ba:g`, or `yarn ba:g`).
+  - To switch databases, update the provider in lib/better-auth/index.ts, adjust Drizzle and client setup in db/index.ts, change db variable type in types.ts and run the codegen command (`pnpm run ba:g`, `npm run ba:g`, or `yarn ba:g`).
 
 ## Requirements
 
@@ -155,6 +155,7 @@ src/
     better-auth/
       index.ts       # Better Auth options, database provider config
       options.ts     # Auth options
+      utils.ts       # Utils function for Auth options
   middlewares/
     auth.middleware.ts   # Auth middleware
     db.middleware.ts     # DB middleware

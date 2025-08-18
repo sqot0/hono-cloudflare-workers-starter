@@ -4,8 +4,8 @@ import { Bindings } from '@/types'
 import { createDatabase } from '@/db'
 import { betterAuthOptions } from './options'
 
-export const createAuth = (env: Bindings): ReturnType<typeof betterAuth> => {
-  const db = createDatabase(env)
+export const createAuth = (env: Bindings, db?: ReturnType<typeof createDatabase>): ReturnType<typeof betterAuth> => {
+  if (!db) db = createDatabase(env)
   return betterAuth({
     basePath: '/auth',
     baseURL: env.BETTER_AUTH_URL,
