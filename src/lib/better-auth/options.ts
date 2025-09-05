@@ -1,5 +1,5 @@
 import { BetterAuthOptions } from 'better-auth'
-import { openAPI, bearer } from 'better-auth/plugins'
+import { openAPI } from 'better-auth/plugins'
 import { hash, verify } from './utils'
 
 export const betterAuthOptions: BetterAuthOptions = {
@@ -8,21 +8,12 @@ export const betterAuthOptions: BetterAuthOptions = {
     requireEmailVerification: false,
     password: {
       hash,
-      verify
-    }
+      verify,
+    },
   },
-  /*
-        socialProviders: {
-            google: {
-                clientId: env.GOOGLE_CLIENT_ID!,
-                clientSecret: env.GOOGLE_CLIENT_SECRET!,
-            },
-        },
-    */
   plugins: [
     openAPI({
       path: '/scalar',
     }),
-    bearer(),
   ],
 }

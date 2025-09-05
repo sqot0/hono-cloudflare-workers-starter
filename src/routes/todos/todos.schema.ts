@@ -1,5 +1,7 @@
 import { createRoute } from '@hono/zod-openapi'
-import { z } from 'zod'
+import { Z } from 'node_modules/better-auth/dist/shared/better-auth.DOq11zLi'
+import { zoom } from 'node_modules/better-auth/dist/social-providers/index.cjs'
+import * as z from 'zod'
 
 const todoSchema = z.object({
   id: z.string().uuid(),
@@ -11,6 +13,11 @@ const todoSchema = z.object({
 
 const createTodoSchema = todoSchema.omit({ id: true, createdAt: true, updatedAt: true })
 const updateTodoSchema = createTodoSchema.partial()
+
+export interface TodoTypes {
+  createTodo: z.infer<typeof createTodoSchema>
+  updateTodo: z.infer<typeof updateTodoSchema>
+}
 
 export const todosRoutes = {
   list: createRoute({
@@ -35,7 +42,7 @@ export const todosRoutes = {
     tags: ['Todos'],
     security: [{ Bearer: [] }],
     request: {
-      params: z.object({ id: z.string().uuid() }),
+      params: z.object({ id: z.uuid() }),
     },
     responses: {
       200: {
@@ -79,7 +86,7 @@ export const todosRoutes = {
     tags: ['Todos'],
     security: [{ Bearer: [] }],
     request: {
-      params: z.object({ id: z.string().uuid() }),
+      params: z.object({ id: z.uuid() }),
       body: {
         content: {
           'application/json': {
@@ -105,7 +112,7 @@ export const todosRoutes = {
     tags: ['Todos'],
     security: [{ Bearer: [] }],
     request: {
-      params: z.object({ id: z.string().uuid() }),
+      params: z.object({ id: z.uuid() }),
     },
     responses: {
       200: {

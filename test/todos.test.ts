@@ -3,8 +3,8 @@ import { describe, it, expect } from 'vitest'
 import { mockUser } from './mockUser'
 import { env } from 'cloudflare:test'
 
-// Helper to get auth token
-async function getAuthToken() {
+// Helper to get cookies
+async function getCookies() {
   const res = await app.request(
     '/auth/sign-in/email',
     {
@@ -21,17 +21,17 @@ async function getAuthToken() {
     },
     env,
   )
-  const data = await res.json()
-  return data.token
+  const data = res.headers.get('Set-Cookie')!.split(';')[0]
+  return data
 }
 
 describe.sequential('Todos Endpoints', () => {
-  let token: string
+  let cookie: string
   let createdTodoId: string
 
-  it('should authenticate and get token', async () => {
-    token = await getAuthToken()
-    expect(token).toBeDefined()
+  it('should authenticate and get cookie', async () => {
+    cookie = await getCookies()
+    expect(cookie).toBeDefined()
   })
 
   it('should create a new todo', async () => {
@@ -41,7 +41,7 @@ describe.sequential('Todos Endpoints', () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Cookie: cookie,
         },
         body: JSON.stringify({
           title: 'Test Todo',
@@ -63,7 +63,7 @@ describe.sequential('Todos Endpoints', () => {
       {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Cookie: cookie,
         },
       },
       env,
@@ -79,7 +79,7 @@ describe.sequential('Todos Endpoints', () => {
       {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Cookie: cookie,
         },
       },
       env,
@@ -96,7 +96,7 @@ describe.sequential('Todos Endpoints', () => {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Cookie: cookie,
         },
         body: JSON.stringify({
           completed: true,
@@ -115,7 +115,7 @@ describe.sequential('Todos Endpoints', () => {
       {
         method: 'DELETE',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Cookie: cookie,
         },
       },
       env,

@@ -2,22 +2,27 @@ import { HTTPException } from 'hono/http-exception'
 import { eq, and, desc } from 'drizzle-orm'
 import { Context } from 'hono'
 import type { Bindings, Variables } from '@/types'
+import { TodoTypes } from './todos.schema'
 import { todo } from '@/db/schema'
 
 export class TodosService {
   constructor(private c: Context<{ Bindings: Bindings; Variables: Variables }>) {}
 
-  async getTodos() {
+  private getAuthorizedUser() {
     const user = this.c.get('user')
     if (!user) throw new HTTPException(401, { message: 'Unauthorized' })
+    return user
+  }
+
+  async getTodos() {
+    const user = this.getAuthorizedUser()
     const db = this.c.get('db')
     const todos = await db.select().from(todo).where(eq(todo.userId, user.id)).orderBy(desc(todo.createdAt))
     return todos
   }
 
   async getTodo(id: string) {
-    const user = this.c.get('user')
-    if (!user) throw new HTTPException(401, { message: 'Unauthorized' })
+    const user = this.getAuthorizedUser()
     const db = this.c.get('db')
     const todoRecord = (
       await db
@@ -29,9 +34,8 @@ export class TodosService {
     return todoRecord
   }
 
-  async createTodo(data: { title: string; completed?: boolean }) {
-    const user = this.c.get('user')
-    if (!user) throw new HTTPException(401, { message: 'Unauthorized' })
+  async createTodo(data: TodoTypes['createTodo']) {
+    const user = this.getAuthorizedUser()
     const db = this.c.get('db')
     const insertedTodo = await db
       .insert(todo)
@@ -41,9 +45,8 @@ export class TodosService {
     return insertedTodo
   }
 
-  async updateTodo(id: string, data: Partial<{ title: string; completed: boolean }>) {
-    const user = this.c.get('user')
-    if (!user) throw new HTTPException(401, { message: 'Unauthorized' })
+  async updateTodo(id: string, data: TodoTypes['updateTodo']) {
+    const user = this.getAuthorizedUser()
     const db = this.c.get('db')
     const existingTodo = await db
       .select()
@@ -55,8 +58,7 @@ export class TodosService {
   }
 
   async deleteTodo(id: string) {
-    const user = this.c.get('user')
-    if (!user) throw new HTTPException(401, { message: 'Unauthorized' })
+    const user = this.getAuthorizedUser()
     const db = this.c.get('db')
     const existingTodo = await db
       .select()

@@ -10,13 +10,14 @@ This is a starter template for building Cloudflare Workers using the [Hono](http
 
 ## Why This Stack?
 
-All tools in this stack are free or low-cost, efficient, and easy to use.  
+All tools in this stack are free or low-cost, efficient, and easy to use.
+
 - **Hono** is lightweight and fast for edge/serverless environments.
 - **Drizzle ORM** is simple, type-safe, and flexible for database changes.
 - **libSQL (Turso DB)** is a serverless database with a generous free tier [turso.tech](https://turso.tech).
 - **Better Auth** provides secure authentication out of the box.
 - **Zod** makes validation easy and reliable.
-- The project is easy to change:  
+- The project is easy to change:
   - To switch databases, update the provider in lib/better-auth/index.ts, adjust Drizzle and client setup in db/index.ts, change db variable type in types.ts and run the codegen command (`pnpm run ba:g`, `npm run ba:g`, or `yarn ba:g`).
 
 ## Requirements
@@ -30,12 +31,14 @@ All tools in this stack are free or low-cost, efficient, and easy to use.
 ## Installation
 
 1. **Clone the repository**
+
    ```sh
    git clone https://github.com/sqot0/hono-cloudflare-workers-starter
    cd hono-cloudflare-workers-starter
    ```
 
 2. **Install dependencies**
+
    - With pnpm:
      ```sh
      pnpm install
@@ -54,6 +57,7 @@ All tools in this stack are free or low-cost, efficient, and easy to use.
    See .dev.vars and .env.example for examples.
 
    You can generate a `BETTER_AUTH_SECRET` with:
+
    - pnpm:
      ```sh
      pnpx @better-auth/cli@latest secret
@@ -68,6 +72,7 @@ All tools in this stack are free or low-cost, efficient, and easy to use.
      ```
 
 4. **Database setup**
+
    - Create a Turso DB ([turso.tech](https://docs.turso.tech/introduction))
    - Add your database URL and Auth Token to .env
    - Run migrations:
@@ -85,6 +90,7 @@ All tools in this stack are free or low-cost, efficient, and easy to use.
        ```
 
 5. **Generate Cloudflare type definitions**
+
    - pnpm:
      ```sh
      pnpm cf-typegen
@@ -99,6 +105,7 @@ All tools in this stack are free or low-cost, efficient, and easy to use.
      ```
 
 6. **Run locally**
+
    - pnpm:
      ```sh
      pnpm dev
@@ -112,7 +119,7 @@ All tools in this stack are free or low-cost, efficient, and easy to use.
      yarn dev
      ```
 
-6. **Or run tests**
+7. **Or run tests**
    - pnpm:
      ```sh
      pnpm test
@@ -181,20 +188,20 @@ test/
 
 - **types.ts**: Defines Hono context bindings and environment variables. Middleware assigns variables here for use in routes.
 - **index.ts**: Main app configuration. Loads all endpoints, sets up error handling, and imports routes.
-- **Creating new routes**:  
+- **Creating new routes**:
   - Example: See todos.routes.ts.  
     Create a new folder in routes, add your route file, and import it in index.ts.
-- **src/middlewares/**:  
+- **src/middlewares/**:
   - `auth.middleware.ts`: Handles authentication logic.
   - `db.middleware.ts`: Attaches database client to context.
   - `index.ts`: Exports all middlewares for easy import.
-- **src/lib/better-auth/**:  
+- **src/lib/better-auth/**:
   - `index.ts`: Configure Better Auth options and set the database provider. Change provider here to switch DBs.
   - `options.ts`: Set authentication options.
-- **src/db/**:  
+- **src/db/**:
   - Set up Drizzle ORM and libSQL client. Change here to switch ORM or DB client.
-- **Tests (test folder)**:  
-  - Contains setup, mocks, and example tests.  
+- **Tests (test folder)**:
+  - Contains setup, mocks, and example tests.
   - Run all tests with `pnpm test`, `npm test`, or `yarn test`.
 
 ## API Documentation with OpenAPI

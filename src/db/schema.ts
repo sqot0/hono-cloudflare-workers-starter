@@ -1,4 +1,7 @@
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
+import { user } from './auth.schema'
+
+export * from './auth.schema'
 
 export const todo = sqliteTable('todo', {
   id: text('id')
@@ -9,7 +12,9 @@ export const todo = sqliteTable('todo', {
   completed: integer('completed', { mode: 'boolean' })
     .$defaultFn(() => false)
     .notNull(),
-  userId: text('user_id').notNull(),
+  userId: text('user_id')
+    .references(() => user.id, { onDelete: 'cascade' })
+    .notNull(),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .$defaultFn(() => new Date())
     .notNull(),
@@ -17,5 +22,3 @@ export const todo = sqliteTable('todo', {
     .$defaultFn(() => new Date())
     .notNull(),
 })
-
-export * from './auth.schema'

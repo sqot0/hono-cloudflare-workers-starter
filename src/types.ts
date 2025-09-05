@@ -14,6 +14,7 @@ export type Variables = {
   db: LibSQLDatabase<typeof schema>
   user: User | null
   session: Session | null
+  auth: ReturnType<typeof import('@/lib/better-auth').createAuth>
 }
 
 export type AppBindings = {

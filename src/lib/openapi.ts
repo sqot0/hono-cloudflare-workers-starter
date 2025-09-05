@@ -6,7 +6,7 @@ export default function configureOpenAPI(app: OpenAPIHono<{ Bindings: Bindings; 
   app.openAPIRegistry.registerComponent('securitySchemes', 'Bearer', {
     type: 'http',
     scheme: 'bearer',
-    description: 'Bearer authentication'
+    description: 'Bearer authentication',
   })
 
   app.doc('/openapi.json', {
